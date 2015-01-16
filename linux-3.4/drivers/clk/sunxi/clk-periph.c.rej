@@ -1,0 +1,22 @@
+--- drivers/clk/sunxi/clk-periph.c
++++ drivers/clk/sunxi/clk-periph.c
+@@ -639,6 +649,9 @@
+     struct sunxi_clk_periph_gate *gate = &periph->gate;
+     unsigned long reg, flag = 0;
+     
++    if(periph->flags & CLK_READONLY)
++        return 0;
++
+     if((periph->com_gate && periph->com_gate->val)
+        && (periph->com_gate->val & periph->com_gate->mask) != (1 << periph->com_gate_off))
+        return 1;
+@@ -686,6 +699,9 @@
+     struct sunxi_clk_periph_gate *gate = &periph->gate;
+     unsigned long reg, flag = 0;
+ 
++    if(periph->flags & CLK_READONLY)
++        return 0;
++
+     if((periph->com_gate && periph->com_gate->val)
+        && (periph->com_gate->val & periph->com_gate->mask) != (1 << periph->com_gate_off))
+        return 1;    
